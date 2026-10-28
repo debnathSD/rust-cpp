@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Rust to the Metal</title>
+<meta name="description" content="A year-long roadmap from Rust basics through systems work, C++ interop, edge AI and embedded robotics, with progress saved to your account.">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230e7264'/%3E%3Crect x='5' y='13' width='3' height='6' rx='1' fill='%23fff'/%3E%3Crect x='10' y='13' width='6' height='6' rx='1' fill='%23fff'/%3E%3Crect x='18' y='13' width='4' height='6' rx='1' fill='%23fff' opacity='.7'/%3E%3Crect x='24' y='13' width='3' height='6' rx='1' fill='%23fff' opacity='.45'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,500..800&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="assets/styles.css">
+<script type="module" src="assets/app.js"></script>
+</head>
+<body>
+
+<main class="gate" id="gate">
+  <div class="gate-inner">
+    <p class="eyebrow">Personal roadmap · Rust first, C++ second · edge AI and robotics</p>
+    <h1>Rust <span class="thin">to the</span> Metal</h1>
+    <p class="lede">A year-long path from your first borrow-checker error to a Raspberry Pi that runs a quantized model and an ESP32 that keeps a servo steady. Sign in to track your progress; it follows you across devices.</p>
+    <div class="gate-actions">
+      <button class="btn" id="sign-in" type="button" disabled>Sign in with Google</button>
+      <p class="gate-msg" id="gate-msg" role="status">Checking sign-in…</p>
+    </div>
+    <div class="gate-tl" aria-hidden="true">
+      <div class="segs" id="gate-segs"></div>
+      <div class="tl-foot"><span id="gate-span"></span><span class="legend"><span class="t-rust">Rust</span><span class="t-cpp">C++</span><span class="t-ai">Edge AI</span><span class="t-emb">Embedded</span></span></div>
+    </div>
+    <p class="fine">Your progress is stored under your own account. Nobody else can read or change it.</p>
+    <noscript><p class="gate-msg error">This tracker needs JavaScript to sign you in and save progress.</p></noscript>
+  </div>
+</main>
+
+<div class="wrap" id="app" hidden>
+  <header class="top">
+    <div class="topbar">
+      <p class="eyebrow">Personal roadmap · Rust first, C++ second · edge AI and robotics</p>
+      <div class="account"><span class="who" id="who"></span><button class="btn-quiet" id="sign-out" type="button">Sign out</button></div>
+    </div>
+    <h1>Rust <span class="thin">to the</span> Metal</h1>
+    <p class="lede">A year-long path from your first borrow-checker error to a Raspberry Pi that runs a quantized model and an ESP32 that keeps a servo steady. Rust is the main language. C++ comes in Phase 4, when you need it to talk to the AI engines and drivers that already exist.</p>
+
+    <div class="controls">
+      <div class="field">
+        <label for="start">Start date</label>
+        <input type="date" id="start" value="2026-11-02">
+      </div>
+      <div class="field">
+        <label for="pace">Pace</label>
+        <select id="pace">
+          <option value="6">6 h / week</option>
+          <option value="8">8 h / week</option>
+          <option value="10" selected>10 h / week</option>
+          <option value="15">15 h / week</option>
+          <option value="20">20 h / week</option>
+        </select>
+      </div>
+      <div class="overall">
+        <div class="overall-line"><span id="overall-count"><strong>0</strong> of 0 done</span><span id="overall-span"></span></div>
+        <div class="meter" role="progressbar" aria-label="Overall progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="overall-meter"><span></span></div>
+        <div class="status" id="save-status" data-kind="loading" role="status">Loading your progress…</div>
+      </div>
+    </div>
+
+    <div class="timeline" aria-label="Timeline, to scale in weeks">
+      <div class="segs" id="segs"></div>
+      <div class="tl-foot">
+        <span id="tl-dates"></span>
+        <span class="legend"><span class="t-rust">Rust</span><span class="t-cpp">C++</span><span class="t-ai">Edge AI</span><span class="t-emb">Embedded</span></span>
+      </div>
+    </div>
+  </header>
+
+  <div class="layout">
+    <nav class="rail" id="rail" aria-label="Phases"></nav>
+
+    <main>
+      <section class="howto" id="howto">
+        <div>
+          <h2>Weekly rhythm</h2>
+          <div class="rhythm">
+            <div><span class="d">Tue</span><span class="h">1.5 h</span><span>Read this week's chapter; note anything confusing in <code>LEARNING.md</code></span></div>
+            <div><span class="d">Thu</span><span class="h">1.5 h</span><span>Exercises: Rustlings, Exercism, or the phase's drills</span></div>
+            <div><span class="d">Sat</span><span class="h">4 h</span><span>Project work</span></div>
+            <div><span class="d">Sun</span><span class="h">2 h</span><span>Finish the week's slice, write the log entry, push</span></div>
+          </div>
+          <p class="fine">About 9 hours a week alongside a full-time job. Change the pace above and every date on this page moves with it.</p>
+        </div>
+        <div>
+          <h2>Ground rules</h2>
+          <ol class="rules">
+            <li>Write code in every session, reading days included. Aim for 70% writing, 30% reading.</li>
+            <li>Measure memory in every project from day one: <code>/usr/bin/time -l</code> prints peak resident memory on macOS.</li>
+            <li>Stuck for 30 minutes? Write the question down, then ask on <a href="https://users.rust-lang.org" target="_blank" rel="noopener">users.rust-lang.org</a> or ask Claude.</li>
+            <li>Every project goes on GitHub with a README that states what you measured.</li>
+            <li>Don't skip the exit checks. If one fails, spend a week on it before moving on.</li>
+          </ol>
+        </div>
+      </section>
+
+      <div id="phases"></div>
+
+      <section class="extra" id="kit">
+        <h2>Hardware kit</h2>
+        <div class="kit">
+          <div><span class="when">Phases 0–4</span><span>An Apple silicon Mac. It's ARM, so the NEON SIMD you learn carries over to the Pi, and Candle can use its GPU through Metal. Nothing to buy yet.</span></div>
+          <div><span class="when">Phase 5</span><span>Raspberry Pi 5 (8 GB or 16 GB), an active cooler, and an NVMe drive or a fast microSD card.</span></div>
+          <div><span class="when">Phase 6</span><span>An ESP32-C6 dev board (RISC-V; Espressif maintains the Rust HAL) or a Raspberry Pi Pico 2 with Embassy. A BMI270 or MPU-6050 IMU breakout, an SG90 micro servo with its own 5 V supply, breadboard, jumpers, LEDs, buttons, and a cheap 8-channel USB logic analyzer.</span></div>
+          <div><span class="when">Later, optional</span><span>An NVIDIA Jetson Orin Nano, if you want CUDA and TensorRT experience.</span></div>
+        </div>
+      </section>
+
+      <section class="extra" id="expert">
+        <h2>What “expert” looks like at the end</h2>
+        <ul class="signals">
+          <li>You write <code>unsafe</code> code and can show why it's sound.</li>
+          <li>You choose atomic orderings by reasoning, not by trying <code>SeqCst</code> until it works.</li>
+          <li>You predict memory and latency before measuring, and you're close.</li>
+          <li>You can open a C++ codebase, find the undefined behavior, and bridge it to Rust safely.</li>
+          <li>Your firmware has fixed memory and measured timing.</li>
+          <li>Other people use code you wrote: a crate, or merged pull requests upstream.</li>
+        </ul>
+      </section>
+
+      <footer>Durations assume the pace you pick above; 10 h/week is the baseline. Resources are free unless marked <span class="badge" style="margin-left:0">book</span>. Source on <a href="https://github.com/debnathSD/rust-cpp" target="_blank" rel="noopener">GitHub</a>.</footer>
+    </main>
+  </div>
+</div>
+
+<template id="diag-tpl">
+<figure class="diag">
+<div class="term"><pre><span class="err">error[E0382]</span><b>: borrow of moved value: `name`</b>
+ <span class="blue">--&gt;</span> src/main.rs:4:20
+  <span class="blue">|</span>
+<span class="blue">2 |</span>     let name = String::from("ferris");
+  <span class="blue">|</span>         <span class="blue">---- move occurs because `name` has type `String`, which does not implement the `Copy` trait</span>
+<span class="blue">3 |</span>     let owner = name;
+  <span class="blue">|</span>                 <span class="blue">---- value moved here</span>
+<span class="blue">4 |</span>     println!("{}", name);
+  <span class="blue">|</span>                    <span class="err">^^^^ value borrowed here after move</span>
+  <span class="blue">|</span>
+<span class="help">help</span><b>: consider cloning the value if the performance cost is acceptable</b>
+  <span class="blue">|</span>
+<span class="blue">3 |</span>     let owner = name.clone();
+  <span class="blue">|</span>                     <span class="help">++++++++</span></pre></div>
+<figcaption>By the end of week 3, an error like this should read as a sentence: who owned the value, where it moved, and the ways out (clone it, or borrow it with <code>&amp;name</code>).</figcaption>
+</figure>
+</template>
+
+</body>
+</html>

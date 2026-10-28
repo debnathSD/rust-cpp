@@ -1,0 +1,32 @@
+rules_version = '2';
+
+// Paste this into Firebase console → Firestore Database → Rules, then Publish.
+// Each signed-in person reads and writes only their own progress document, users/<their uid>.
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function signedInAs(uid) {
+      return request.auth != null && request.auth.uid == uid;
+      // To keep the tracker to yourself only, replace the line above with:
+      // return request.auth != null && request.auth.uid == uid
+      //   && request.auth.token.email == "you@example.com"
+      //   && request.auth.token.email_verified == true;
+    }
+
+    function validProgress() {
+      let d = request.resource.data;
+      return d.keys().hasAll(["done", "start", "pace", "updatedAt"])
+        && d.keys().hasOnly(["done", "start", "pace", "updatedAt"])
+        && d.done is map && d.done.size() <= 500
+        && d.start is string && d.start.size() == 10
+        && d.pace is int && d.pace >= 1 && d.pace <= 40
+        && d.updatedAt == request.time;
+    }
+
+    match /users/{uid} {
+      allow read: if signedInAs(uid);
+      allow create, update: if signedInAs(uid) && validProgress();
+      allow delete: if false;
+    }
+  }
+}
