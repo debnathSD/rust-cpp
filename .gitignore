@@ -1,0 +1,5 @@
+# Cargo build output, from any Rust project in this repo (rust-journey/, hello/, ...)
+target/
+
+# macOS folder metadata
+.DS_Store
