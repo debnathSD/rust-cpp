@@ -21,7 +21,7 @@ export const PHASES = [
       { t: "The Rust Programming Language, ch. 1", u: "https://doc.rust-lang.org/book/", note: "known as “the Book”; free" }
     ],
     checks: [
-      { n: "toolchain_works", t: "`cargo new hello && cargo run` prints Hello, world!" },
+      { n: "toolchain_works", t: "`cargo new hello`, then `cd hello` and `cargo run`, prints Hello, world!" },
       { n: "clippy_clean", t: "`cargo clippy` finishes with zero warnings" }
     ]
   },
