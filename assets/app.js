@@ -51,7 +51,7 @@ function renderPhase(p) {
   const checks = p.checks.map((c, i) => {
     const id = `${p.id}-x-${i}`;
     phaseItems[p.id].push(id);
-    return `<li data-row="${id}"><input type="checkbox" id="c-${id}" data-item="${id}"><label for="c-${id}"><span class="tn">test ${esc(c.n)}</span> <span class="dim">...</span><span class="td">${rich(c.t)}</span></label><span class="st" data-st="${id}">pending</span></li>`;
+    return `<li data-row="${id}"><input type="checkbox" id="c-${id}" data-item="${id}"><label for="c-${id}"><span class="td">${rich(c.t)}</span></label><span class="st" data-st="${id}">pending</span></li>`;
   }).join("");
   const diag = p.diag ? $("diag-tpl").innerHTML : "";
   return `
@@ -76,8 +76,7 @@ function renderPhase(p) {
     ${build}
     <div class="term exit">
       <h3>Exit checks</h3>
-      <div><span class="dim">$</span> cargo test --test phase_${p.n}_exit</div>
-      <div class="dim">running ${p.checks.length} tests</div>
+      <p class="exit-note">Check these yourself and tick each one once it's true. They aren't commands to run.</p>
       <ul>${checks}</ul>
       <div class="res" data-res="${p.id}"></div>
     </div>
@@ -157,8 +156,8 @@ function updateProgress() {
     const passed = p.checks.filter((_, i) => state.done[`${p.id}-x-${i}`]).length;
     const left = p.checks.length - passed;
     document.querySelector(`[data-res="${p.id}"]`).innerHTML = left === 0
-      ? `<span class="dim">test result:</span> <b class="ok">ok</b>. ${passed} passed; 0 pending. Phase ${p.n} complete.`
-      : `<span class="dim">test result:</span> <b>pending</b>. ${passed} passed; ${left} to go`;
+      ? `<b class="ok">All ${passed} passed.</b> Phase ${p.n} complete.`
+      : `<b>${passed} of ${p.checks.length} passed</b>, ${left} to go`;
   });
   const pct = all ? Math.round(allDone / all * 100) : 0;
   $("overall-count").innerHTML = `<strong>${allDone}</strong> of ${all} done · ${pct}%`;

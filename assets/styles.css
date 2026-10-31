@@ -1,5 +1,5 @@
 /* Layout: a sign-in screen, then a sticky phase rail beside one long column;
-   each phase reads why → learn/read → build → exit checks (styled as cargo test output). */
+   each phase reads why → learn/read → build → exit checks (in a dark terminal-style box). */
 :root{
   --bg:#f1f3ef; --surface:#fafbf8; --sunk:#e5e9e3; --ink:#17201c; --muted:#56635d; --line:#d2d8d1; --line-strong:#a6b1aa;
   --accent:#0e7264; --on-accent:#ffffff; --accent-soft:#d6ebe4; --oxide:#a03f1a; --ai:#4352a6; --emb:#865c00;
@@ -149,9 +149,8 @@ h3{font-family:var(--f-mono);font-weight:600;font-size:.73rem;letter-spacing:.1e
 .exit li{display:grid;grid-template-columns:18px minmax(0,1fr) auto;gap:10px;align-items:start}
 .exit input{width:15px;height:15px;margin:3px 0 0;accent-color:var(--code-ok);cursor:pointer}
 .exit label{cursor:pointer;min-width:0}
-.exit .tn{color:var(--code-blue);overflow-wrap:anywhere}
-.exit .td{display:block;color:var(--code-dim);font-family:var(--f-body);font-size:.92rem;line-height:1.45;margin-top:2px}
-.exit li.done .td{color:var(--code-ink)}
+.exit-note{margin:0;color:var(--code-dim);font-family:var(--f-body);font-size:.9rem}
+.exit .td{display:block;color:var(--code-ink);font-family:var(--f-body);font-size:.95rem;line-height:1.45}
 .exit .st{font-weight:600;color:var(--code-dim)}
 .exit li.done .st{color:var(--code-ok)}
 .exit .res b{font-weight:600;color:var(--code-dim)}
