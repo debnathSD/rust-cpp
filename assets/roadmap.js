@@ -22,7 +22,7 @@ export const PHASES = [
     ],
     checks: [
       { n: "toolchain_works", t: "`cargo new hello`, then `cd hello` and `cargo run`, prints Hello, world!" },
-      { n: "clippy_clean", t: "`cargo clippy` finishes with zero warnings" }
+      { n: "clippy_clean", t: "Still inside `hello`, `cargo clippy` finishes with no `warning:` lines (it's a separate command; `cargo run` doesn't run it)" }
     ]
   },
   {
